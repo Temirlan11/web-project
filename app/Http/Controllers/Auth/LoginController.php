@@ -4,8 +4,9 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
+use App\User;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Http\Client\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class   LoginController extends Controller
@@ -45,16 +46,23 @@ class   LoginController extends Controller
     }
 
     public function login(Request $request){
-        $credentials = $request->only('email', 'password');
+        $this->validate($request, [
+            'email' => 'required|email',
+            'password' => 'required',
+        ]);
 
-        if(Auth::attempt($credentials)){
-            $request->session()->put('data', $request->input());
+        if (Auth::attempt(['email' => $request->input('email'),
+            'password' => $request->input('password')])) {
+            $user = User::whereEmail($request->email)->first();
+            $request->session()->put('user_id', $user->id);
+//            $value = $request->session()->get('user_id');
             return redirect()->route('home');
         }else
             return redirect()->route('loginform');
     }
 
     public function logout(){
+        session()->forget('user_id');
         Auth::logout();
             return redirect()->route('home');
     }

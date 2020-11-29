@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers\Auth;
 
+use App\Basket;
 use App\Country;
 use App\Http\Controllers\Controller;
 use App\Providers\RouteServiceProvider;
 use App\User;
+//use GuzzleHttp\Psr7\Request;
+use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
@@ -63,13 +67,28 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
-        return User::create([
-            'name' => $data['name'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password']),
+        $token = $request->input('_token') ?: $request->header('X-CSRF-TOKEN');
+        $newUser = User::create([
+            'fname' => $request['fname'],
+            'mname' => $request['mname'],
+            'lname' => $request['lname'],
+            'phone_number' => $request['phone_number'],
+            'birth_date' => $request['birth_date'],
+            'address' => $request['address'],
+            'gender' => $request['gender'],
+            'role' => 'user',
+            'remember_token' => $token,
+            'country_id' => $request['country_id'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
         ]);
+        Basket::create([
+            'user_id' => $newUser->id
+        ]);
+
+        return redirect('/login');
     }
 
     public function registerForm(){

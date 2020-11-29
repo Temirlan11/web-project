@@ -186,12 +186,13 @@
                     <div class="card mb-3" style="max-width: 800px;">
                         <div class="row no-gutters">
                             <div class="col-md-3">
-                                <img src="images/img1.jpg" class="card-img" alt="...">
+                                <img src="https://simpleicon.com/wp-content/uploads/user1.png" class="card-img" alt="...">
                             </div>
                             <div class="col-md-8">
                                 <div class="card-body">
-                                    <h5 class="card-title">Card title</h5>
-
+                                    <h5 class="card-title">{{$current_user->fname}} {{$current_user->mname}} {{$current_user->lname}}</h5>
+                                    <h6>Address: {{$current_user->address}}</h6>
+                                    <h6>Phone Number: {{$current_user->phone_number}}</h6>
                                     <ul class="nav mt-5">
                                         <li class="nav-item">
                                             <a class="nav-link" href="#" style="color: grey">All Orders</a>
@@ -306,16 +307,16 @@
                 <h4>Edit Profile</h4>
                 <div class="form-group">
                     <label for="exampleInputEmail1">Email address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" value="<%=user.getEmail()%>" aria-describedby="emailHelp" disabled>
+                    <input type="email" class="form-control" id="exampleInputEmail1" name="email" value="{{$current_user->email}}" aria-describedby="emailHelp" disabled>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputFullName1">Full Name</label>
-                    <input type="text" class="form-control" name="full_name" id="exampleInputFullName1" value="<%=user.getFull_name()%>">
+                    <input type="text" class="form-control" name="full_name" id="exampleInputFullName1" value="{{$current_user->fname}} {{$current_user->mname}}">
                     <small id="emailHelp4" class="form-text text-muted">Change your full name</small>
                 </div>
                 <div class="form-group">
                     <label for="exampleInputBirthdate2">Birthdate</label>
-                    <input type="text" class="form-control" name="birthdate" id="exampleInputBirthdate2" value="<%=user.getBirth_date()%>">
+                    <input type="text" class="form-control" name="birthdate" id="exampleInputBirthdate2" value="{{$current_user->birth_date}}">
                     <small id="emailHelp5" class="form-text text-muted">Change your birthdate</small>
                 </div>
                 <button type="submit" name="action" value="update_profile" class="btn btn-primary" style="background-color: midnightblue">Update Profile</button>

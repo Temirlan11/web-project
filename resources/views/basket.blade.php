@@ -66,7 +66,7 @@
     <nav class="navbar navbar-dark default-color " style="background-color: #A9CCCC;">
         <form class="form-inline">
             <div class="">
-                <a class="navbar-brand" href="#"><strong>Navbar</strong></a>
+                <a class="navbar-brand" href="{{route('home')}}"><strong>Navbar</strong></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
                         aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -103,26 +103,33 @@
                     </div>
                 </div>
             </div>
-            @foreach($basket->products as $product)
+            @if($basket == null)
                 <div class="card mb-3" style="max-width: 750px;">
-                    <div class="row no-gutters">
-                        <div class="col-md-4">
-                            <img src="{{$product->smallPictureURL}}" class="card-img" alt="...">
-                        </div>
-                        <div class="col-md-8">
-                            <div class="card-body">
-                                <h5 class="card-title">{{$product->name}}</h5>
-                                <p class="card-text">{{$product->description}}</p>
-                                <p class="card-text">Price: {{$product->price}}</p>
-                                <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
-                                <hr>
-                                <a href="#" class="btn btn-primary">Order from this seller</a>
-                                <a href="{{route('deletefrombasket', $product->id)}}" class="btn btn-primary">Delete</a>
+                    <h1>Pustoy</h1>
+                </div>
+                @else
+                    @foreach($basket->products as $product)
+                        <div class="card mb-3" style="max-width: 750px;">
+                            <div class="row no-gutters">
+                                <div class="col-md-4">
+                                    <img src="{{$product->smallPictureURL}}" class="card-img" alt="...">
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Added product</h6>
+                                        <h5 class="card-title">{{$product->name}}</h5>
+                                        <p class="card-text">{{$product->description}}</p>
+                                        <p class="card-text">Price: {{$product->price}}</p>
+                                        <p class="card-text"><small class="text-muted">Last updated 3 mins ago</small></p>
+                                        <hr>
+                                        <a href="#" class="btn btn-primary">Order from this seller</a>
+                                        <a href="{{route('deletefrombasket', $product->id)}}" class="btn btn-primary">Delete</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            @endforeach
+                    @endforeach
+            @endif
 {{--                <?php for ($i=0; $i < 3; $i++) { ?>--}}
 {{--                <div class="card mb-3" style="max-width: 750px;">--}}
 {{--                    <div class="row no-gutters">--}}

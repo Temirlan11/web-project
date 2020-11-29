@@ -26,6 +26,7 @@ Route::get('/profile', function () {
 //
 //Route::get('/', [\App\Http\Controllers\HomeController::class, 'index'] )->name('index');
 Route::get('/details/{id}', [\App\Http\Controllers\HomeController::class,'show'])->name('show');
+Route::get('/profile', [\App\Http\Controllers\ProfileController::class,'index'])->name('profile');
 //Auth:routes([
 //
 //]);
@@ -37,13 +38,14 @@ Route::get('/details/{id}', [\App\Http\Controllers\HomeController::class,'show']
 
 Route::get('/', 'HomeController@index')->name('home');
 
-Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'loginForm'])->name('loginform');
-Route::post('/login', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('login');
+Route::get('/loginpage', [\App\Http\Controllers\Auth\LoginController::class, 'loginForm'])->name('loginform');
+Route::get('/login', [\App\Http\Controllers\Auth\LoginController::class, 'loginForm'])->name('login');
+Route::post('/auth', [\App\Http\Controllers\Auth\LoginController::class, 'login'])->name('auth');
 
-Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('login');
+Route::post('/logout', [\App\Http\Controllers\Auth\LoginController::class, 'logout'])->name('logout');
 
 Route::get('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'registerForm'])->name('registerform');
-Route::post('/register', [\App\Http\Controllers\Auth\RegisterController::class, 'register'])->name('register');
+Route::post('/registration', [\App\Http\Controllers\Auth\RegisterController::class, 'create'])->name('registration');
 
 Route::get('/addtobasket/{id}', [\App\Http\Controllers\HomeController::class, 'addToBasket'])->name('addtobasket');
 

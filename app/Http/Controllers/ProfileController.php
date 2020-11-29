@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Basket;
+use App\Product_category;
 use App\Products;
+use App\User;
 use Illuminate\Http\Request;
 
-class BasketController extends Controller
+class ProfileController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +17,8 @@ class BasketController extends Controller
     public function index()
     {
         $user_id = session()->get('user_id');
-        $basket = Basket::where('user_id', $user_id)->firstOrFail();
-        return view('basket', compact(['basket']));
+        $current_user = User::find($user_id);
+        return view('profile', compact(['current_user']));
     }
 
     /**
@@ -44,10 +45,10 @@ class BasketController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Basket  $basket
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function show(Basket $basket)
+    public function show(User $user)
     {
         //
     }
@@ -55,10 +56,10 @@ class BasketController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Basket  $basket
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function edit(Basket $basket)
+    public function edit(User $user)
     {
         //
     }
@@ -67,10 +68,10 @@ class BasketController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Basket  $basket
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Basket $basket)
+    public function update(Request $request, User $user)
     {
         //
     }
@@ -78,15 +79,11 @@ class BasketController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Basket  $basket
+     * @param  \App\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        $user_id = session()->get('user_id');
-        $current_user = User::find($user_id);
-        $basket = Basket::find(2);
-        $basket->products()->detach($id);
-        return view('basket', compact('basket'));
+        //
     }
 }

@@ -8,8 +8,10 @@ class Basket extends Model
 {
 //    use HasFactory;
 
+    public $timestamps = false;
+
     protected $fillable = [
-        'user_id', 'basket_added_date'
+        'user_id'
     ];
 
     public function products(){

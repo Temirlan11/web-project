@@ -14,6 +14,7 @@
 <body>
 <!--Main Navigation-->
 <header>
+    @include('layouts.app')
 
     <nav class="navbar navbar-expand-lg navbar-dark pink scrolling-navbar" style="background-color: #93BDBD; height: 40px">
         <div class="collapse navbar-collapse offset-9" id="navbarSupportedContent">
@@ -34,10 +35,10 @@
 {{--                    </div>--}}
 {{--                </li>--}}
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Log out</a>
+                    <a class="nav-link" href="/loginpage">Log out</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/login">Sign in</a>
+                    <a class="nav-link" href="/loginpage">Sign in</a>
                 </li>
 {{--                data-toggle="modal" data-target="#modalLoginForm"--}}
                 <li class="nav-item dropdown">
@@ -48,7 +49,7 @@
 {{--                    data-toggle="modal" data-target="#modalBuyerRegisterForm"--}}
                     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                         <a class="dropdown-item" href="/register">Sign up as a buyer</a>
-                        <a class="dropdown-item" href="#">Sign up as a seller</a>
+                        <a class="dropdown-item" href="/register">Sign up as a seller</a>
                     </div>
                 </li>
             </ul>
@@ -80,7 +81,7 @@
                 <button class="btn btn-outline-white btn-md my-2 my-sm-0 ml-3 text-white" type="submit">Search</button>
             </div>
             <div class="md-form" style="margin-left: 220px">
-                <a href="/basket" style="color: white">
+                <a href="{{route('basket')}}" style="color: white">
                     <svg width="2em" height="2em" viewBox="0 0 16 16" class="bi bi-basket2" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                         <path d="M4 10a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 0 1 2 0v2a1 1 0 0 1-2 0v-2zm3 0a1 1 0 1 1 2 0v2a1 1 0 0 1-2 0v-2z"/>
                         <path fill-rule="evenodd" d="M5.757 1.071a.5.5 0 0 1 .172.686L3.383 6h9.234L10.07 1.757a.5.5 0 1 1 .858-.514L13.783 6H15.5a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-.623l-1.844 6.456a.75.75 0 0 1-.722.544H3.69a.75.75 0 0 1-.722-.544L1.123 8H.5a.5.5 0 0 1-.5-.5v-1A.5.5 0 0 1 .5 6h1.717L5.07 1.243a.5.5 0 0 1 .686-.172zM2.163 8l1.714 6h8.246l1.714-6H2.163z"/>
@@ -190,20 +191,37 @@
                         </a>
                     </div>
 
-                    <!-- Card content -->
-                    <div class="card-body card-body-cascade">
+                    @guest
+                        <!-- Card content -->
+                            <div class="card-body card-body-cascade">
 
-                        <!-- Label -->
-                        <h5 class="pink-text pb-2 pt-1"><i class="fas fa-utensils"></i>My Profile</h5>
-                        <!-- Title -->
-                        <h4 class="font-weight-bold card-title">Oyazbayev Temirlan</h4>
-                        <!-- Text -->
-                        <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit
-                            laboriosam, nisi ut aliquid ex ea commodi.</p>
-                        <!-- Button -->
-                        <a class="btn btn-unique offset-4" href="/profile" style="background-color: #A9CCCC; color: white">More</a>
+                                <!-- Label -->
+                                <h5 class="pink-text pb-2 pt-1"><i class="fas fa-utensils"></i>My Profile</h5>
+                                <!-- Title -->
+                                <h4 class="font-weight-bold card-title">Sign in or register</h4>
+                                <!-- Text -->
+                                <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit
+                                    laboriosam, nisi ut aliquid ex ea commodi.</p>
+                                <!-- Button -->
+                                <a class="btn btn-unique offset-4" href="/profile" style="background-color: #A9CCCC; color: white">register</a>
 
-                    </div>
+                            </div>
+                    @else
+                        <!-- Card content -->
+                            <div class="card-body card-body-cascade">
+
+                                <!-- Label -->
+                                <h5 class="pink-text pb-2 pt-1"><i class="fas fa-utensils"></i>My profile</h5>
+                                <!-- Title -->
+                                <h4 class="font-weight-bold card-title">{{$current_user->fname}} {{$current_user->mname}}</h4>
+                                <!-- Text -->
+                                <p class="card-text">Ut enim ad minima veniam, quis nostrum exercitationem ullam corporis suscipit
+                                    laboriosam, nisi ut aliquid ex ea commodi.</p>
+                                <!-- Button -->
+                                <a class="btn btn-unique offset-4" href="{{route('profile')}}" style="background-color: #A9CCCC; color: white">More</a>
+
+                            </div>
+                        @endguest
 
                 </div>
                 <!-- Card Narrower -->
@@ -311,7 +329,7 @@
                                         <div class="card-body">
                                             <h4 class="card-title">{{$product->name}}</h4>
                                             <p class="card-text">{{$product->price}}</p>
-                                            <a href="{{route('show', 2)}}" class="btn" style="background-color: #A9CCCC; color: white" href="productsDetails.html">More</a>
+                                            <a href="{{route('show', $product->id)}}" class="btn" style="background-color: #A9CCCC; color: white">More</a>
                                             <a href="{{route('addtobasket', $product->id)}}" type="submit" class="btn" style="background-color: #A9CCCC; color: white">Add to basket</a>
                                             <a href="{{route('deleteproduct', $product->id)}}" type="submit" class="btn" style="background-color: #A9CCCC; color: white">Delete</a>
                                         </div>
